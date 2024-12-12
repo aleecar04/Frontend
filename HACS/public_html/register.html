@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register Page</title>
+</head>
+<body>
+    <h1>Register</h1>
+
+    <!-- Form sends data to the server endpoint -->
+    <form action="https://example.com/api/save-data" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username" required>
+        <br><br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br><br>
+
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="user_id" required>
+        <br><br>
+        
+        <!-- Role Selection Dropdown -->
+        <label for="role">Role:</label>
+        <select id="role" name="role" required>
+            <option value="donor">Donor</option>
+            <option value="aidOrg">Aid Organization</option>
+            <option value="volunteer">Volunteer</option>
+            <option value="government">Government Representative</option>
+            <option value="affected">Affected Individual</option>
+        </select>
+        <br><br>
+        
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <!-- Button to return to the main page -->
+    <button onclick="location.href='index.html'">Back to Main Page</button>
+</body>
+</html>

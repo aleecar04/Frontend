@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"> <!-- Configuración del conjunto de caracteres para UTF-8 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> <!-- Ajuste de la escala para dispositivos móviles -->
+    <title>HACS</title> <!-- Título de la pestaña del navegador -->
+</head>
+<body>
+    <h1>Hummanitarian Aid Coordination System </h1> <!-- Título visible en la página -->
+    
+    <!-- Etiqueta para una lista desplegable -->
+    <label for="options">Select an option:</label>
+    <select id="options" onchange="navigate()"> <!-- Lista desplegable, ejecuta la función `navigate` al cambiar la selección -->
+        <option value="">--Select--</option> <!-- Opción por defecto -->
+        <option value="login.html">Login Page</option> <!-- Redirige a `page1.html` -->
+        <option value="register.html">Register Page</option> <!-- Redirige a `page2.html` -->
+    </select>
+
+    <script>
+        // Función para redirigir según la selección
+        function navigate() {
+            const selectedOption = document.getElementById('options').value; // Obtiene el valor seleccionado
+            if (selectedOption) { // Si se seleccionó una opción válida
+                window.location.href = selectedOption; // Redirige al archivo correspondiente
+            }
+        }
+    </script>
+</body>
+</html>
