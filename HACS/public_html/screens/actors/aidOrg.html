@@ -3,10 +3,258 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Aid Organization</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        .container {
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .section {
+            margin-bottom: 20px;
+        }
+
+        .section h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .buttons button {
+            padding: 10px;
+            font-size: 14px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+        }
+
+        .buttons button:hover {
+            background-color: #d0d0d0;
+        }
+
+        .assign-section, .manage-section {
+            margin-bottom: 20px;
+        }
+
+        .assign-section label, .manage-section label {
+            font-size: 14px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .assign-section input, .manage-section input {
+            padding: 5px;
+            width: 100%;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+        }
+
+        /* Menu desplegable en la esquina superior derecha */
+        .dropdown {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 14px;
+        }
+
+        .dropdown button {
+            background-color: #f0f0f0;
+            border: 1px solid #ccc;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .dropdown button:hover {
+            background-color: #d0d0d0;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #f9f9f9;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border: 1px solid #ccc;
+        }
+
+        .dropdown-content a {
+            color: black;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #ddd;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* Estilos para la ventana modal */
+        .modal {
+            display: none; /* Oculto por defecto */
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4); /* Fondo oscuro */
+            overflow: auto;
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            margin: 5% auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-<input type="text">
-<select name="" id=""></select>  
+    <div class="container">
+        <h1>Aid Organization</h1>
+        
+        <!-- Manage Activities Section -->
+        <div class="section">
+            <h2>Manage Activities</h2>
+            <div class="buttons">
+                <button id="manageGoodsBtn">Manage Goods</button>
+                <button id="manageFundsBtn">Manage Funds</button>
+                <button>Qualify Volunteer</button>
+            </div>
+        </div>
+
+        <!-- Assign Activity Section -->
+        <div class="assign-section">
+            <h2>Assign Activity</h2>
+            <label for="user">User to which assign the activity:</label>
+            <input type="text" id="user" name="user" placeholder="Enter user name">
+            
+            <label for="references">References:</label>
+            <input type="text" id="references" name="references" placeholder="Enter references">
+        </div>
+
+        <!-- History Link -->
+        <div class="history-link">
+            <a href="#">View History</a>
+        </div>
+    </div>
+
+    <!-- Menu desplegable (log-out, view history) -->
+    <div class="dropdown">
+        <button>Menu</button>
+        <div class="dropdown-content">
+            <a href="#">Log-out</a>
+            <a href="#">View History</a>
+        </div>
+    </div>
+
+    <!-- Modal for Manage Goods -->
+    <div id="manageGoodsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeManageGoods">&times;</span>
+            <h2>Manage Goods</h2>
+            <label for="goodsName">Name of the Goods:</label>
+            <input type="text" id="goodsName" name="goodsName" placeholder="Enter goods name">
+
+            <label for="goodsQuantity">Quantity:</label>
+            <input type="number" id="goodsQuantity" name="goodsQuantity" placeholder="Enter quantity">
+        </div>
+    </div>
+
+    <!-- Modal for Manage Funds -->
+    <div id="manageFundsModal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="closeManageFunds">&times;</span>
+            <h2>Manage Funds</h2>
+            <label for="fundsAmount">Amount of Funds:</label>
+            <input type="number" id="fundsAmount" name="fundsAmount" placeholder="Enter funds amount">
+
+            <label for="fundsSource">Source of Funds:</label>
+            <input type="text" id="fundsSource" name="fundsSource" placeholder="Enter source of funds">
+        </div>
+    </div>
+
+    <script>
+        // Get modal elements
+        var manageGoodsModal = document.getElementById("manageGoodsModal");
+        var manageFundsModal = document.getElementById("manageFundsModal");
+
+        // Get buttons that open modals
+        var manageGoodsBtn = document.getElementById("manageGoodsBtn");
+        var manageFundsBtn = document.getElementById("manageFundsBtn");
+
+        // Get <span> elements that close the modals
+        var closeManageGoods = document.getElementById("closeManageGoods");
+        var closeManageFunds = document.getElementById("closeManageFunds");
+
+        // When the user clicks the button, open the corresponding modal
+        manageGoodsBtn.onclick = function() {
+            manageGoodsModal.style.display = "block";
+        }
+
+        manageFundsBtn.onclick = function() {
+            manageFundsModal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the corresponding modal
+        closeManageGoods.onclick = function() {
+            manageGoodsModal.style.display = "none";
+        }
+
+        closeManageFunds.onclick = function() {
+            manageFundsModal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside the modal, close it
+        window.onclick = function(event) {
+            if (event.target == manageGoodsModal) {
+                manageGoodsModal.style.display = "none";
+            }
+            if (event.target == manageFundsModal) {
+                manageFundsModal.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
