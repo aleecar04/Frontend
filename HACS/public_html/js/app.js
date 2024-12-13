@@ -12,4 +12,3 @@ const connectToBackend = async () => {
 
 // Llama a la función al cargar la página
 window.onload = connectToBackend;
-
